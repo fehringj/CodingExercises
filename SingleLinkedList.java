@@ -3,14 +3,17 @@ public class SingleLinkedList
 {
 	Node head; // head of list
 	
+	/** makes new class for nodes */
 	public static class Node 
 	{
 		int data; // initialize integer for data contained in node
 		Node next; // node that comes after current node
+		Node prev;
 		Node(int d) { data = d; next = null; } // create function for node with stored value
 	}
 	
-	public void show() // function to display list of nodes
+	/** function to display list of nodes */
+	public void show() 
 	{
 		Node node = head; 
 		
@@ -21,14 +24,27 @@ public class SingleLinkedList
 		}
 	}
 	
-	public void insertAtStart(int newData) // inserts a value at the beginning of the list
+	/** returns true if the list is empty and false if it contains stored values */
+	public boolean isEmpty()
+	{
+		if (head == null)
+		{
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	/** inserts a value at the beginning of the list */
+	public void insertAtStart(int newData) 
 	{
 		Node n = new Node(newData); // node being created to put at head of list
 		n.next = head;
 		head = n;
 	}
 	
-	public void insert(int index, int data) // function to insert a node at specific position
+	/** function to insert a node at specific position */
+	public void insert(int index, int data) 
 	{
 		Node node = new Node(data); // node to be inserted
 		node.data = data; // value associated with this node
@@ -50,7 +66,8 @@ public class SingleLinkedList
 		}
 	}
 	
-	public void insertAfter(Node prevNode, int data) // inserts a node after a specific value
+	/** function to insert a node after a specific value */
+	public void insertAfter(Node prevNode, int data) 
 	{
 		if (prevNode == null) // you can't insert after if there is no previous node
 		{
@@ -62,7 +79,8 @@ public class SingleLinkedList
 		prevNode.next = newNode; // inserts the new node after previous node
 	}
 	
-	public void append(int newData) // adds a new node to the end of current list
+	/** adds a new node to the end of current list */
+	public void append(int newData) 
 	{
 		Node newNode = new Node(newData);
 		if (head == null) // in the case that there is not data currently in the list, node is placed at head
@@ -79,7 +97,8 @@ public class SingleLinkedList
 		last.next = newNode; // traverses the list and adds node at the end
 	}
 	
-	public void delete(int key) // deletes a specified value
+	/** function to delete a node at a specified value */
+	public void delete(int key) 
 	{
 		if (head == null) return; // nothing to delete if list is empty
 		
@@ -102,7 +121,8 @@ public class SingleLinkedList
 		prev.next = nd.next; // links the previous node with the node following the one deleted
 	}
 	
-	public void deleteAt(int position) // deletes a value at a specific position
+	/** function to delete a node at a specified position */
+	public void deleteAt(int position) 
 	{
 		if (head == null) return; // nothing to delete if the list is empty
 		
@@ -126,7 +146,8 @@ public class SingleLinkedList
 		node.next = next; // gets rid of the node at the specified position
 	}
 	
-	public int getLength() // gives total number of entries in the list
+	/** gives total number of entries in the list */
+	public int getLength() 
 	{
 		int count = 0;
 		Node node = head;
@@ -139,10 +160,10 @@ public class SingleLinkedList
 		return count;
 	}
 	
+	/** function to swap int x and int y in single linked list
+	 */
 	public void swap(int x, int y)
 	{
-		/** function to swap int x and int y in single linked list
-		 */
 		if (x == y) return; // if nodes are equal do not swap
 		
 		Node ref = head;
@@ -159,7 +180,7 @@ public class SingleLinkedList
 			{
 				b = ref;
 			}
-			ref = ref.next;
+			ref = ref.next; 
 		}
 		if (a != null && b != null) // move nodes such that a and b are swapped
 		{
@@ -172,6 +193,35 @@ public class SingleLinkedList
 		}	
 	}
 	
+	/** converts singly linked list to a circular linked list */
+	public void circular()
+	{
+		Node start = head;
+		
+		while (start.next != null)
+		{
+			start = start.next;
+		}
+		start.next = head;
+	}
+	
+	/** displays values stored in a circular linked list */
+	public void circshow()
+	{
+		Node start = head;
+		
+		if (start != null)
+		{
+			do
+			{
+				System.out.print(start.data + " ");
+				start = start.next;
+			}
+			while (start != head);
+		}
+	}
+	
+	// Driver code
 	public static void main(String[] args)
 	{
 		SingleLinkedList mylist = new SingleLinkedList();
@@ -202,5 +252,10 @@ public class SingleLinkedList
 		System.out.println();
 		System.out.println("Total number of values in list is " + 
 				mylist.getLength() + ".");
+		System.out.println();
+		System.out.println("Same list but in cicular version.");
+		
+		mylist.circular();
+		mylist.circshow();
 	}
 }
